@@ -1,5 +1,6 @@
-﻿#include "incVector.h"
+#include "incVector.h"
 #include "incMatrix.h"
+#include <iostream>
 
 int main() {
 	Matrix first(2, 2);
