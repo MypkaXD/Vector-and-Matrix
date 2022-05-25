@@ -45,11 +45,15 @@ Matrix Matrix::operator*(const Matrix& other) const {
 		exit(0);
 	}
 
-	Matrix newMatrix(m_line, m_column);
-	for (int count = 0; count < m_line; count++) {
-		for (int COUNT = 0; COUNT < m_column; COUNT++)
-			newMatrix.m_lines[count][COUNT] = m_lines[count][COUNT] * other.m_lines[count][COUNT];
+	Matrix newMatrix(m_line, other.m_column);
+	for (int i = 0; i < newMatrix.m_line; i++) {
+		for (int k = 0; k < m_column; k++){
+			for (int j = 0; j < newMatrix.m_column; j++) {
+				newMatrix[i][j] = m_lines[i][k] * other[j][i];
+			}
+		}
 	}
+
 	return newMatrix;
 }
 Matrix Matrix::operator*(double value) const {
