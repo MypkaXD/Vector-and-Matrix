@@ -3,8 +3,15 @@
 #include <iostream>
 
 int main() {
+	setlocale(LC_ALL, "rus");
 	Matrix first(2, 2);
 	std::cin >> first;
+	/*
+	first[0][0] = 21;
+	first[0][1] = 21;
+	first[1][0] = 2;
+	first[1][1] = -5;
+	*/
 	std::cout << "first:\n" << first << "------------------------------" << std::endl;
 
 	Matrix second(2, 2);
