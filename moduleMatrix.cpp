@@ -1,6 +1,7 @@
 #include "incMatrix.h"
 #include "incVector.h"
 
+
 Matrix Matrix::operator=(const Matrix& other) {
 	if (*this == other) {
 		return *this;
@@ -15,6 +16,27 @@ Matrix Matrix::operator=(const Matrix& other) {
 	}
 	return *this;
 }
+
+
+Matrix Matrix::operator*(const Matrix& other) const {
+	if (m_column != other.m_line) {
+		std::cout << "ERROR" << std::endl;
+		exit(0);
+	}
+
+	Matrix newMatrix(m_line, other.m_column);
+	for (int i = 0; i < newMatrix.m_line; i++) {
+		for (int k = 0; k < m_column; k++){
+			for (int j = 0; j < newMatrix.m_column; j++) {
+				newMatrix[i][j] += m_lines[i][k] * other[k][j];
+			}
+		}
+	}
+
+	return newMatrix;
+}
+
+
 Matrix Matrix::operator+(const Matrix& other) const {
 	if (m_line != other.m_line && m_column != other.m_column) {
 		std::cout << "ERROR" << std::endl;
@@ -28,34 +50,23 @@ Matrix Matrix::operator+(const Matrix& other) const {
 	}
 	return newMatrix;
 }
+
+
 Matrix Matrix::operator-() const {
-	return *this * (-1);
+	return (* this * (-1));
 }
+
+
 Matrix Matrix::operator-(const Matrix& other) const {
 	if (m_line != other.m_line && m_column != other.m_column) {
 		std::cout << "ERROR" << std::endl;
 		exit(0);
 	}
 
-	return (*this * (-other));
+	return (*this + (-other));
 }
-Matrix Matrix::operator*(const Matrix& other) const {
-	if (m_line != other.m_line && m_column != other.m_column) {
-		std::cout << "ERROR" << std::endl;
-		exit(0);
-	}
 
-	Matrix newMatrix(m_line, other.m_column);
-	for (int i = 0; i < newMatrix.m_line; i++) {
-		for (int k = 0; k < m_column; k++){
-			for (int j = 0; j < newMatrix.m_column; j++) {
-				newMatrix[i][j] = m_lines[i][k] * other[j][i];
-			}
-		}
-	}
 
-	return newMatrix;
-}
 Matrix Matrix::operator*(double value) const {
 	Matrix newMatrix(m_line, m_column);
 	for (int count = 0; count < m_line; count++) {
@@ -63,10 +74,14 @@ Matrix Matrix::operator*(double value) const {
 	}
 	return newMatrix;
 }
+
+
 Matrix& Matrix::operator*=(double value) {
 	*this = *this * value;
 	return *this;
 }
+
+
 Matrix& Matrix::operator*=(const Matrix& other) {
 	if (m_line != other.m_line && m_column != other.m_column) {
 		std::cout << "ERROR" << std::endl;
@@ -75,6 +90,8 @@ Matrix& Matrix::operator*=(const Matrix& other) {
 	*this = *this * other;
 	return *this;
 }
+
+
 Matrix& Matrix::operator+=(const Matrix& other) {
 	if (m_line != other.m_line && m_column != other.m_column) {
 		std::cout << "ERROR" << std::endl;
@@ -83,6 +100,8 @@ Matrix& Matrix::operator+=(const Matrix& other) {
 	*this = *this + other;
 	return *this;
 }
+
+
 Matrix& Matrix::operator-=(const Matrix& other) {
 	if (m_line != other.m_line && m_column != other.m_column) {
 		std::cout << "ERROR" << std::endl;
@@ -105,13 +124,18 @@ bool Matrix::operator==(const Matrix& other) const {
 	}
 	return true;
 }
+
+
 bool Matrix::operator!=(const Matrix& other) {
 	return !(*this == other);
 }
 
+
 void Matrix::setColumn(int column) {
 	m_column = column;
 }
+
+
 void Matrix::setLine(int line) {
 	m_line = line;
 }
